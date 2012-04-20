@@ -23,7 +23,7 @@ Create a `jax` folder in `applications/third_party/` and copy this repository's 
 ```
 
 At the moment there is only the single helper function to bind to a BOSH connection. More will come, but the structure alone should be a great start for any project working to integrate [JAXL](https://github.com/abhinavsingh/jaxl).
-
+Read more about the [CodeIgniter Loader](http://codeigniter.com/user_guide/libraries/loader.html)
 ## Why no CodeIgniter config/jax.php?!
 
 [JAXL](https://github.com/abhinavsingh/jaxl) already has a pretty well organized configuration structure.
