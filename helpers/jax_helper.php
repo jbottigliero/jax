@@ -2,20 +2,7 @@
 
 if(!function_exists('postAuth')){
     function postAuth($payload, $JAXL){
-        $response = array(
-            'jid' => $JAXL->jid,
-            'sid' => $JAXL->bosh['sid'],
-            'rid' => $JAXL->bosh['rid']+1
-        );
-
-        $CI = &get_instance();
-
-        // Store XMPP data in CI Session
-        $CI->session->set_userdata('jid',$JAXL->jid);
-        $CI->session->set_userdata('rid',$JAXL->bosh['rid']+1);
-        $CI->session->set_userdata('sid',$JAXL->bosh['sid']);
-
-        $JAXL->JAXL0206('out', $response);
+        // Default postAuth handler
     }   
 }
 

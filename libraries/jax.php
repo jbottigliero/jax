@@ -10,6 +10,7 @@ class Jax {
 
 	function __construct(){
 		$this->CI =& get_instance();
+		$this->CI->JAXL = $this->JAXL;
 	}
 
 	public function bind($settings = array()){
@@ -21,36 +22,35 @@ class Jax {
 
 		// Simplified postAuth for prebinding...
 		function postAuth($payload, $JAXL){
-			$response = array(
-				'jid' => $JAXL->jid,
-				'sid' => $JAXL->bosh['sid'],
-				'rid' => $JAXL->bosh['rid']+1
-			);
+			$CI = &get_instance();
 
-        	$JAXL->JAXL0206('out', $response);
+        	// Store XMPP data in CI Session
+       		$CI->session->set_userdata('jid', $JAXL->jid);
+        	$CI->session->set_userdata('rid', ($JAXL->bosh['rid'] + 1));
+        	$CI->session->set_userdata('sid', $JAXL->bosh['sid']);
+		}
+
+		// We don't need to do anything on disconnect since we'll be binding back to this stream.
+		function postDisconnect($payload, $JAXL){
+			// ==
 		}
 
 		$this->_connect_bosh();
-		
 	}
 
 	private function _connect_bosh() {
 		// Load in the default callback functions
 		$this->CI->load->helper('jax');
-
-		// for performing preferred auth mechanism (optional if auth mech already configured via Jaxl constructor)
-		$this->JAXL->addPlugin('jaxl_get_auth_mech', 'doAuth');
+		
 		// Get RID, SID, JID after successful auth 
 		$this->JAXL->addPlugin('jaxl_post_auth', 'postAuth');
 		// Detect auth failure
 		$this->JAXL->addPlugin('jaxl_post_auth_failure','postAuthFailure');
 
-		$this->JAXL->addPlugin('jaxl_post_disconnect', '');
+		$this->JAXL->addPlugin('jaxl_post_disconnect', 'postDisconnect');
 
 		// Start up the core...
 		$this->JAXL->startCore('bosh');
 	}
 
-
 }
-
