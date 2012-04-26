@@ -17,7 +17,7 @@ Create a `jax` folder in `applications/third_party/` and copy this repository's 
 	$this->jax->bind(array(
 		'user' => 'jbottigliero', 
 		'pass' => 'secret',
-		'resource' => 'jax'
+		'resource' => 'jax',
 		'boshOut' => FALSE // Used for response stanza output, the default is TRUE.
 	));
 
